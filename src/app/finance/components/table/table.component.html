@@ -1,0 +1,21 @@
+<table class="table">
+  <thead class="table__header">
+    <tr>
+      <th *ngFor="let item of tableHeader">{{item}}</th>
+    </tr>
+  </thead>
+  <tbody class="table__body">
+    <tr *ngFor="let change of tableData">
+      <td *ngFor="let item of tableHeader; let i = index">
+        <span
+          [class.isPositive]="(i == 3 || i == 4) && change[item] > '0'"
+          [class.isNegative]="(i == 3 || i == 4) && change[item] < '0'"
+          [class.isNeutral]="(i == 3 || i == 4) && change[item] == '0.00%'">
+          <i *ngIf="(i == 3 || i == 4) && change[item] > '0.00%'" class="fas fa-arrow-up"></i>
+          <i *ngIf="(i == 3 || i == 4)  && change[item] < '0.00%'" class="fas fa-arrow-down"></i>
+          {{(i == 3 || i == 4) ? change[item].replace('-', '') : change[item]}}
+        </span>
+      </td>
+    </tr>
+  </tbody>
+</table>

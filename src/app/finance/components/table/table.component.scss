@@ -1,0 +1,41 @@
+.table{
+  width: 100%;
+  height: 100%;
+
+  &__header{
+    position: sticky;
+    top: 0;
+    background-color: #fff;
+
+    th{
+      border-collapse: collapse;
+      padding: 20px;
+      text-align: center;
+      border-bottom: 1px solid #d9dbdb;
+      font-size: 22px;
+      font-weight: 600;
+    }
+  }
+
+  &__body{
+    td{
+      border-collapse: collapse;
+      padding: 10px;
+      text-align: center;
+      border-bottom: 1px solid #d9dbdb;
+      font-size: 18px;
+    }
+
+    .isPositive{
+      color: green;
+    }
+
+    .isNegative{
+      color: red;
+    }
+
+    .isNeutral{
+      color: #000;
+    }
+  }
+}

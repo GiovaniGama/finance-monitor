@@ -1,0 +1,14 @@
+<div class="finance">
+  <app-input-select
+    label="Ações"
+    [financeName]="financeNames"
+    (valueSelected)="onValueSelected($event)"
+    >
+  </app-input-select>
+
+  <h1>Ativo: {{ stockSymbol }}</h1>
+  <h2>Variação Percentual Diária nos Últimos 30 Pregões</h2>
+  <div *ngIf="stockData.length" class="finance__table">
+    <app-table [tableHeader]="tableHeader" [tableData]="tableData"></app-table>
+  </div>
+</div>

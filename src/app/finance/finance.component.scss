@@ -1,0 +1,8 @@
+.finance{
+  &__table{
+    overflow: auto;
+    max-height: 600px;
+
+    box-shadow: 2px 5px 12px 2px rgba(0,0,0,0.493);
+  }
+}

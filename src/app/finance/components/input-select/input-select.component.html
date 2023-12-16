@@ -1,0 +1,10 @@
+<mat-form-field>
+  <mat-label>{{label}}</mat-label>
+  <mat-select [(value)]="selectedValue" (selectionChange)="onValueSelected()">
+      <mat-option
+        *ngFor="let finance of financeName"
+        [value]="finance.symbol">
+          {{finance.symbol}}
+      </mat-option>
+  </mat-select>
+</mat-form-field>
