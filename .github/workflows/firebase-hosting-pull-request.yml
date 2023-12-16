@@ -26,4 +26,4 @@ jobs:
       with:
         args: deploy
       env:
-        FIREBASE_TOKEN: 1//0hIlPpg5micP3CgYIARAAGBESNwF-L9IrYripGiKIqv2Zsy-sRIPgGRtlOaf9kE4ORJfNmzSe_cQSeekcR_QCjmUNKk93ozLQxKA
+        FIREBASE_TOKEN: 1//0hGgSjG0W89GiCgYIARAAGBESNwF-L9IrIFjgdNgUtPLJTzc2XcPzB-2WYajL9XpAaX4tlx1u4ZGZ-InNO1kksMqi8gFqCJSKE6I
