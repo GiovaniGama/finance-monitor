@@ -1,14 +1,5 @@
 {
-  "targets": {
-    "finance-monitor-d2a6c": {
-      "hosting": {
-        "finance-monitor": [
-          "finance-monitor-d2a6c"
-        ]
-      }
-    }
-  },
   "projects": {
-    "default": "finance-monitor-d2a6c"
+    "default": "finance-monitor"
   }
 }
