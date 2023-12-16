@@ -15,7 +15,6 @@ export class InputSelectComponent {
   selectedValue: string | undefined
 
   onValueSelected(){
-    console.log(this.selectedValue)
     this.valueSelected.emit(this.selectedValue)
   }
 }

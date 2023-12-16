@@ -14,6 +14,13 @@ export class FinanceComponent implements OnInit {
   financeNames: FincanceNameActionsInterface[] = []
   tableHeader: string[] = ['Dia', 'Data', 'Valor', 'Variação em relação a D-1', 'Variação em relação à primeira data'];
   tableData: any[] = [];
+  lineChartData: any[] = [];
+  lineChartLabels: any[] = [];
+  lineChartOptions: any = {
+    responsive: true,
+    maintainAspectRatio: false
+  };
+  lineChartLegend = true;
 
   constructor(
       private financeService: FinanceApiAlphavantageService,
@@ -35,6 +42,7 @@ export class FinanceComponent implements OnInit {
       (data: any) => {
         this.stockData = data || [];
         this.tableData = this.generateTableData();
+        this.prepareChartData();
       })
   }
 
@@ -50,40 +58,47 @@ export class FinanceComponent implements OnInit {
       return '0.00%';
     }
 
-    const today = this.stockData[index] ?? 0;
-    const yesterday = this.stockData[index - 1] ?? 0;
+    const today = this.stockData[index].value ?? 0;
+    const yesterday = this.stockData[index - 1].value ?? 0;
+    if(today === 0 && yesterday === 0){
+      const change = 0;
+      return change.toFixed(2) + '%';
+    }
     const change = ((today - yesterday) / yesterday) * 100;
     return change.toFixed(2) + '%';
   }
 
   calculateChangeFromFirstDay(index: number): string {
-    const firstDay = this.stockData[0] ?? 0;
-    const currentDay = this.stockData[index] ?? 0;
+    if (index === 0) {
+      return '0.00%';
+    }
+
+    const firstDay = this.stockData[0].value ?? 0;
+    const currentDay = this.stockData[index].value ?? 0;
+
+    if(firstDay === 0 && currentDay === 0){
+      return '0.00%';
+    }
+
     const change = ((currentDay - firstDay) / firstDay) * 100;
     return change.toFixed(2) + '%';
   }
 
   calculateDailyChange(): number[] {
     const dailyChanges: number[] = [];
-    for (let i = 1; i < this.stockData.length; i++) {
-      const today = this.stockData[i];
-      const yesterday = this.stockData[i - 1];
+    for (let i = 0; i < this.stockData.length; i++) {
+      const today = this.stockData[i].value ?? 0;
+      const yesterday = this.stockData[i - 1]?.value ?? 0;
       const change = ((today - yesterday) / yesterday) * 100;
       dailyChanges.push(change);
     }
     return dailyChanges;
   }
 
-  calculateTotalChange(): number {
-    const firstDay = this.stockData[0] ?? 0;
-    const lastDay = this.stockData[this.stockData.length - 1] ?? 0;
-    return ((lastDay - firstDay) / firstDay) * 100;
-  }
-
   generateTableData(): any[] {
     const tableRows: any[] = [];
     for (let i = 0; i < this.stockData.length; i++) {
-      const formattedValue = this.stockData[i]?.toLocaleString('pt-BR', {
+      const formattedValue = this.stockData[i].value?.toLocaleString('pt-BR', {
         style: 'currency',
         currency: 'BRL'
       }) || 'R$ 0,00';
@@ -92,12 +107,21 @@ export class FinanceComponent implements OnInit {
         Dia: i + 1,
         Data: this.formatDate(i),
         Valor: formattedValue,
-        'Variação em relação a D-1': this.calculateChangeFromPreviousDay(i),
-        'Variação em relação à primeira data': this.calculateChangeFromFirstDay(i)
+        'Variação em relação a D-1': this.calculateChangeFromPreviousDay(i) === 'Infinity%' ? '100%' : this.calculateChangeFromPreviousDay(i),
+        'Variação em relação à primeira data': this.calculateChangeFromFirstDay(i) === 'Infinity%' ? '100%' : this.calculateChangeFromFirstDay(i)
       };
       tableRows.push(rowData);
     }
     return tableRows;
+  }
+
+  prepareChartData() {
+    this.lineChartLabels = this.tableData.map(item => item['Dia']);
+    const variationData = this.calculateDailyChange();
+
+    this.lineChartData = [
+      { data: variationData, label: 'Variação Diária (%)' }
+    ];
   }
 
   onValueSelected(selectedValue: string) {

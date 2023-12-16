@@ -1,14 +1,32 @@
 <div class="finance">
-  <app-input-select
-    label="Ações"
-    [financeName]="financeNames"
-    (valueSelected)="onValueSelected($event)"
-    >
-  </app-input-select>
-
-  <h1>Ativo: {{ stockSymbol }}</h1>
-  <h2>Variação Percentual Diária nos Últimos 30 Pregões</h2>
-  <div *ngIf="stockData.length" class="finance__table">
-    <app-table [tableHeader]="tableHeader" [tableData]="tableData"></app-table>
+  <div class="finance__input">
+    <app-input-select
+      label="Escolha a ação"
+      [financeName]="financeNames"
+      (valueSelected)="onValueSelected($event)"
+      >
+    </app-input-select>
+    <div class="finance__info">
+      <h1>Ativo: {{ stockSymbol }}</h1>
+      <h2>Variação Percentual Diária nos Últimos 30 Pregões</h2>
+    </div>
   </div>
+
+  <mat-tab-group>
+    <mat-tab label="Tabela">
+      <div *ngIf="stockData.length" class="finance__table">
+        <app-table [tableHeader]="tableHeader" [tableData]="tableData"></app-table>
+      </div>
+    </mat-tab>
+    <mat-tab label="Gráfico">
+      <div class="finance__graphic">
+        <app-graphic
+          [lineChartData]="lineChartData"
+          [lineChartLabels]="lineChartLabels"
+          [lineChartLegend]="lineChartLegend"
+          [lineChartOptions]="lineChartOptions"
+        ></app-graphic>
+      </div>
+    </mat-tab>
+  </mat-tab-group>
 </div>

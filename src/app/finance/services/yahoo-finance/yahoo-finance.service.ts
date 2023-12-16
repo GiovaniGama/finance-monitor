@@ -15,8 +15,20 @@ export class YahooFinanceService {
     return this.http.get(`${this.domain}/${name}`)
       .pipe(
         map((data: any) => {
+          const timestamps = data?.chart?.result[0]?.timestamp || [];
           const stockData = data?.chart?.result[0]?.indicators?.quote[0]?.open || [];
-          return stockData.slice(-30);
+
+          const last30Timestamps = timestamps.slice(-30);
+          const last30StockData = stockData.slice(-30);
+  
+          const matchedData = last30Timestamps.map((timestamp: any, index: number) => {
+            return {
+              timestamp,
+              value: last30StockData[index] || 0
+            };
+          });
+  
+          return matchedData;
         })
     );
   }

@@ -9,13 +9,17 @@ import {MatInputModule} from '@angular/material/input';
 import {MatSelectModule} from '@angular/material/select';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import { TableComponent } from './components/table/table.component';
+import { NgChartsModule } from 'ng2-charts';
+import { GraphicComponent } from './components/graphic/graphic.component';
+import { MatTabsModule } from '@angular/material/tabs';
 
 
 @NgModule({
   declarations: [
     FinanceComponent,
     InputSelectComponent,
-    TableComponent
+    TableComponent,
+    GraphicComponent
   ],
   imports: [
     CommonModule,
@@ -24,7 +28,9 @@ import { TableComponent } from './components/table/table.component';
     FormsModule,
     MatInputModule,
     MatSelectModule,
-    MatFormFieldModule
+    MatFormFieldModule,
+    NgChartsModule,
+    MatTabsModule
   ]
 })
 export class FinanceModule { }
