@@ -5,8 +5,6 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { FinanceModule } from './finance/finance.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { AngularFireModule } from '@angular/fire/compat'
-import { environment } from 'src/environments/environment';
 
 @NgModule({
   declarations: [
@@ -17,7 +15,6 @@ import { environment } from 'src/environments/environment';
     AppRoutingModule,
     FinanceModule,
     BrowserAnimationsModule,
-    AngularFireModule.initializeApp(environment.firebaseConfig)
   ],
   providers: [],
   bootstrap: [AppComponent]
